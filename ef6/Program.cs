@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ef6.Models;
-
+using System.Data.Entity;
 namespace ef6
 {
     class Program
@@ -13,16 +10,32 @@ namespace ef6
         {
             using (var context = new Context())
             {
-                context.Words.Add(new Word()
-                {
-                    Transcription = "asdf",
-                });
+                var series = new Series() {Title = "The Amazing Spider-Man"};
+                context.ComicBooks.Add(
+                new ComicBook()
+                        {
+                        Series = series,
+                        IssueNumber = 1,
+                        PublishedOn = DateTime.Today
+                        }
+                );
+                context.ComicBooks.Add(
+                    new ComicBook()
+                    {
+                        Series = series,
+                        IssueNumber = 2,
+                        PublishedOn = DateTime.Today
+                    }
+                );
                 context.SaveChanges();
 
-                var words = context.Words.ToList();
-                foreach (var word in words)
+                var books = context.ComicBooks
+                    .Include(cb => cb.Series)
+                    .ToList();
+
+                foreach (var book in books)
                 {
-                    Console.WriteLine(word.Transcription);
+                    Console.WriteLine(book.DisplayText);
                 }
                 Console.ReadLine();
             }
