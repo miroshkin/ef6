@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFTestApp", "EFTestApp\EFTestApp.csproj", "{9997828E-1074-4513-B27D-019523960711}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ef6", "EFTestApp\ef6.csproj", "{9997828E-1074-4513-B27D-019523960711}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
