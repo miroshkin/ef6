@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ef6.Models;
 
 namespace EFTestApp.Models
 {
@@ -21,5 +16,6 @@ namespace EFTestApp.Models
         public string Name { get; set; }
 
         public ICollection<ComicBookArtist> ComicBooks { get; set; }
+
     }
 }
