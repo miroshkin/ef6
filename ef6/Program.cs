@@ -17,9 +17,17 @@ namespace ef6
 
                 //var comicBooks = context.ComicBooks.ToList();
 
-                var comicBooksQuery = from cb in context.ComicBooks select cb;
-                var comicBooks = comicBooksQuery.ToList();
+                
+                var comicBooks = context.ComicBooks
+                    .Include(cb => cb.Series)
+                    .Where(cb => cb.Series.Title.Contains("man"))
+                    .ToList();
 
+                foreach (var comicBook in comicBooks)
+                {
+                    Console.WriteLine(comicBook.DisplayText);
+                }
+                Console.WriteLine();
                 Console.WriteLine("# of comic books:{0}", comicBooks.Count);
 
                 //var books = context.ComicBooks
