@@ -2,6 +2,7 @@
 using System.Linq;
 using ef6.Models;
 using System.Data.Entity;
+using System.Diagnostics;
 using EFTestApp.Models;
 
 namespace ef6
@@ -12,22 +13,30 @@ namespace ef6
         {
             using (var context = new Context())
             {
-            
+                context.Database.Log = (message) => Debug.WriteLine(message);
 
-                var books = context.ComicBooks
-                    .Include(cb => cb.Series)
-                    .Include(cb => cb.Artists.Select(a => a.Artist))
-                    .Include(cb => cb.Artists.Select(a => a.Role))
-                    .ToList();
+                //var comicBooks = context.ComicBooks.ToList();
 
-                foreach (var book in books)
-                {
-                    var artistRoleNames = book.Artists.Select(a => $"{a.Artist.Name} - {a.Role.Name}").ToList();
-                    var artistRolesDisplayText = string.Join(",", artistRoleNames);
+                var comicBooksQuery = from cb in context.ComicBooks select cb;
+                var comicBooks = comicBooksQuery.ToList();
 
-                    Console.WriteLine(book.DisplayText);
-                    Console.WriteLine(artistRolesDisplayText);
-                }
+                Console.WriteLine("# of comic books:{0}", comicBooks.Count);
+
+                //var books = context.ComicBooks
+                //    .Include(cb => cb.Series)
+                //    .Include(cb => cb.Artists.Select(a => a.Artist))
+                //    .Include(cb => cb.Artists.Select(a => a.Role))
+                //    .ToList();
+
+                //foreach (var book in books)
+                //{
+                //    var artistRoleNames = book.Artists.Select(a => $"{a.Artist.Name} - {a.Role.Name}").ToList();
+                //    var artistRolesDisplayText = string.Join(",", artistRoleNames);
+
+                //    Console.WriteLine(book.DisplayText);
+                //    Console.WriteLine(artistRolesDisplayText);
+                //}
+
                 Console.ReadLine();
             }
         }
