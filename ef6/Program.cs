@@ -29,6 +29,12 @@ namespace ef6
                             .Load();
                     }
 
+                    if (book.Series == null)
+                    {
+                        context.Entry(book).Reference(cb => cb.Series)
+                            .Load();
+                    }
+
                     var artistRoleNames = book.Artists.Select(a => $"{a.Artist.Name} - {a.Role.Name}").ToList();
                     var artistRolesDisplayText = string.Join(",", artistRoleNames);
 

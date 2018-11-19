@@ -16,7 +16,7 @@ namespace ef6.Models
         public int ComicBookId { get; set; }
 
         public int SeriesId { get; set; }
-        public virtual Series Series { get; set; }
+        public Series Series { get; set; }
         public int IssueNumber { get; set; }
         public string Description { get; set; }
         public DateTime PublishedOn { get; set; }   
