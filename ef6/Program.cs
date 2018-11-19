@@ -15,26 +15,43 @@ namespace ef6
             {
                 context.Database.Log = (message) => Debug.WriteLine(message);
 
-                var books = context.ComicBooks
-                    //.Include(cb => cb.Series)
-                    //.Include(cb => cb.Artists.Select(a => a.Artist))
-                    //.Include(cb => cb.Artists.Select(a => a.Role))
+                //var comicBooks = context.ComicBooks.ToList();
+
+                var comicBooksQuery = from cb in context.ComicBooks select cb;
+                var comicBooks = comicBooksQuery
+                    .Include(cb => cb.Series)
+                    .Where(cb => cb.Series.Title.Contains("man"))
                     .ToList();
 
-                foreach (var book in books)
+                foreach (var comicBook in comicBooks)
                 {
-                    if (book.Series == null)
-                    {
-                        context.Entry(book).Reference(cb => cb.Series)
-                            .Load();
-                    }
-
-                    var artistRoleNames = book.Artists.Select(a => $"{a.Artist.Name} - {a.Role.Name}").ToList();
-                    var artistRolesDisplayText = string.Join(",", artistRoleNames);
-
-                    Console.WriteLine(book.DisplayText);
-                    Console.WriteLine(artistRolesDisplayText);
+                    Console.WriteLine(comicBook.DisplayText);
                 }
+
+                Console.WriteLine();
+                Console.WriteLine("# of comic books {0}", comicBooks.Count);
+
+
+                //var books = context.ComicBooks
+                //    //.Include(cb => cb.Series)
+                //    //.Include(cb => cb.Artists.Select(a => a.Artist))
+                //    //.Include(cb => cb.Artists.Select(a => a.Role))
+                //    .ToList();
+
+                //foreach (var book in books)
+                //{
+                //    if (book.Series == null)
+                //    {
+                //        context.Entry(book).Reference(cb => cb.Series)
+                //            .Load();
+                //    }
+
+                //    var artistRoleNames = book.Artists.Select(a => $"{a.Artist.Name} - {a.Role.Name}").ToList();
+                //    var artistRolesDisplayText = string.Join(",", artistRoleNames);
+
+                //    Console.WriteLine(book.DisplayText);
+                //    Console.WriteLine(artistRolesDisplayText);
+                //}
 
                 Console.ReadLine();
             }
